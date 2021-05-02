@@ -182,7 +182,22 @@ def process_comment(comment):
             result += x.strip()
         else:
             for y in re.split(r'(?: *\n *){2,}', x):
-                wrapped = wrapper.fill(re.sub(r'\s+', ' ', y).strip())
+                to_wrap = re.sub(r'\s+', ' ', y).strip()
+
+                # TODO handle lists correctly
+                lists = [re.match('.*-\s', to_wrap), re.match('.*\d.\s', to_wrap)]
+
+                wrapped = None
+                for listMatch in lists:
+                    if listMatch is not None:
+                        subsequent_indent = wrapper.subsequent_indent
+                        wrapper.subsequent_indent = wrapper.subsequent_indent + ' ' * listMatch.end()
+                        wrapped = wrapper.fill(to_wrap)
+                        wrapper.subsequent_indent = subsequent_indent
+
+                if wrapped is None :
+                    wrapped = wrapper.fill(to_wrap)
+
                 if len(wrapped) > 0 and wrapped[0] == '$':
                     result += wrapped[1:] + '\n'
                     wrapper.initial_indent = \

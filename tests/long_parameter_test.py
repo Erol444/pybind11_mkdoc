@@ -18,7 +18,7 @@ def test_long_parameter(capsys):
     expected = """\
 Parameter ``x``:
     - Begin first parameter description. Senectus et netus et
-    malesuada fames ac. End first parameter description.)doc";
+      malesuada fames ac. End first parameter description.)doc";
 """
 
     print(res.out)
