@@ -18,7 +18,7 @@ classifiers = [
   "Operating System :: POSIX",
   "Operating System :: MacOS"
 ]
-requires = ["clang"]
+requires = ["clang==14.0"]
 requires-python = ">=3.5"
 
 [tool.flit.scripts]
